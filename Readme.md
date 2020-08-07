@@ -1,17 +1,17 @@
 # SBA API
-본 API는 유저들의 input 문단(Str)을 받아서, 해당 문단을 `키워드 추출`, `형태소 분석`, `유사도 측정` 모듈을 거쳐서, 해당 input 문단(Str)과 유사한 Tag와 Song을 Retrieval 합니다.
+본 API는 유저들의 input pharagrah(str)을 받아서, 해당 pharagrah을 `키워드 추출`, `형태소 분석`, `유사도 측정` 모듈을 거쳐서, 해당 input pharagrah(str)과 유사한 Tag와 Song을 Retrieval 합니다.
 
-- input : Pharagraph (Str)
-- output : query, model_input, tag_list, result_meta, file_url (Json)
-    - query: 유저가 사용한 input pharagraph입니다. (Str)
-    - model_input : `키워드 추출`, `형태소 분석` 을 통해 결과로 나온 단어들의 List 입니다. (List of Str)
-    - tag_list : `유사도 측정` 을 통해 결과로 나온 Tag의 List 입니다. (List of Str)
-    - file_url : `유사도 측정` 을 통해 결과로 나온 Song의 List 입니다. 본 Song은 ./static/audio_meta/audio 경로에 저장되어 있습니다. (List of Str)
+- input : Pharagraph (str)
+- output : query, model_input, tag_list, result_meta, file_url (json)
+    - query: 유저가 사용한 input pharagraph입니다. (str)
+    - model_input : `키워드 추출`, `형태소 분석` 을 통해 결과로 나온 단어들의 List 입니다. (List of str)
+    - tag_list : `유사도 측정` 을 통해 결과로 나온 Tag의 List 입니다. (List of str)
+    - file_url : `유사도 측정` 을 통해 결과로 나온 Song의 List 입니다. 본 Song은 ./static/audio_meta/audio 경로에 저장되어 있습니다. (List of str)
     - result_meta : `유사도 측정` 을 통해 결과로 나온 Song의 metadata 입니다. (List of Dict)
 
 ### Detail Method
 * keyword_extractor
-    - 문단 내 키워드 추출
+    - pharagrah 내 키워드 추출
 * tokenizer
     - 추출된 키워드의 형태소 (명사) 어휘만 재 추출
 * multiquery_retrieval
@@ -61,7 +61,7 @@ pip install -r requirements.txt
 ``` python
 python query_to_meta-api.py
 ```
-Flask 서버 실행 후, query에 sentence 입력
+Flask 서버 실행 후, query에 input pharagrah 입력
 ```bash
 http://127.0.0.1:5000/?query=
 ```
