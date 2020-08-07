@@ -213,9 +213,29 @@ print(keyword_ex)
 pos_tokens = F.tokenizer(" ".join(keyword_ex))
 model_input = list(set(pos_tokens))
 print(model_input)
+
+model = KeyedVectors.load('./static/models/model', mmap='r')
+audio_meta = json.load(open('./static/audio_meta/meta.json', 'r'))
+tag_set = ['Ambient','R & B','SF','Vlog','World','가족','감동','고양','광고','광고하는','교육','그루비',
+            '극도의','기술','냉기','뉴스','뉴에이지','다큐멘터리','댄스','동양적인','드라마','드럼 &베이스','듣기 쉬운',
+            '라이프 스타일','라틴','락','레저','로맨틱','메탈','무서운','범죄','블로그','블루스','비디오 게임','섹시한',
+            '소름','소울','쉬운 듣기','스포츠','슬로 모션','슬로우모션','시사','신나는','신비','어린이','여행','역사',
+            '영화','오케스트라','웃기는','일렉트로닉','재즈','저속 촬영','전자','카페','컨트리',
+            '코메디','클래식','타임랩스','팝','패션','펑키','펑키 재즈','평화로운','포크','희망','힙합']
+
+search_song_indices = [model.wv.vocab[str(x)].index for x in audio_meta.keys() if str(x) in model.wv.vocab]
+tag_indices = [model.wv.vocab[str(x)].index for x in tag_set if str(x) in model.wv.vocab]
+
+audio_list = F.multiquery_retrieval(model.wv, model_input, search_song_indices)
+tag_list = F.multiquery_retrieval(model.wv, model_input, tag_indices)
+
+print(audio_list)
+print(tag_list)
 ```
 
 ```
 ['있느냐”고 비꼬았다', '미래통합당 하태경 의원이', '매뉴얼이라도 있느냐”고 비꼬았다', '부동산', '미래통합당 하태경', '하태경 의원이', '아파트', '청와대', '“청와대에', '비꼬았다']
 ['부동산', '의원', '매뉴얼', '당', '청와대', '미래', '아파트', '하태경', '통합']
+["http://127.0.0.1:5000/static/audio_meta/audio/25_Far_away.wav","http://127.0.0.1:5000/static/audio_meta/audio/65_Running_To_The_Sky.mp3","http://127.0.0.1:5000/static/audio_meta/audio/31_Lost_in_the_fog.wav","http://127.0.0.1:5000/static/audio_meta/audio/86_Ranking_show.mp3","http://127.0.0.1:5000/static/audio_meta/audio/66_Run.mp3"]
+["블로그","뉴스","광고","광고하는","범죄"]
 ```
