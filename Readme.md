@@ -61,7 +61,7 @@ pip install -r requirements.txt
 ``` python
 python query_to_meta-api.py
 ```
-
+Flask 서버 실행 후, query에 sentence 입력
 ```bash
 http://127.0.0.1:5000/?query=
 ```
@@ -211,11 +211,11 @@ sentence = """
 keyword_ex= F.keyword_extractor(sentence)
 print(keyword_ex)
 pos_tokens = F.tokenizer(" ".join(keyword_ex))
-print(pos_tokens)
+model_input = list(set(pos_tokens))
+print(model_input)
 ```
 
 ```
 ['있느냐”고 비꼬았다', '미래통합당 하태경 의원이', '매뉴얼이라도 있느냐”고 비꼬았다', '부동산', '미래통합당 하태경', '하태경 의원이', '아파트', '청와대', '“청와대에', '비꼬았다']
-['미래', '통합', '당', '하태경', '의원', '매뉴얼', '부동산', '미래', '통합', '당', '하태경', '하태경', '의원', '아파트', '청와대', '청와대']
+['부동산', '의원', '매뉴얼', '당', '청와대', '미래', '아파트', '하태경', '통합']
 ```
-
